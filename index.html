@@ -2,60 +2,73 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>API REST</title>
-    <span class="pln">
-    </span>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic"><span
-        class="pln">
-    </span>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css"><span
-        class="pln">
-    </span>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.4.1/milligram.css"><span
-        class="pln">
-    </span>
-    <script type="module" src="index.js" defer></script>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <span class="pln">
+  </span>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic"><span
+    class="pln">
+  </span>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css"><span class="pln">
+  </span>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.4.1/milligram.css"><span class="pln">
+  </span>
+  <link rel="stylesheet" href="style.css">
+  <script type="module" src="index.js" defer></script>
+  <title>API REST</title>
 </head>
 
 <body>
-    <header>
-        <h1>API REST</h1>
-        <p>Práctica de consumo de recursos a través de endpoints. Métodos GET, POST, PUT y DELETE.</p>
-        <p>Utilizamos el backend de prueba de <a href="https://mockapi.io" target="_blank">MockAPI</a></p>
-    </header>
-    <button id="open-modal">open modal</button>
-    <dialog id="modal">
-      <form action="" method="dialog" id="form">
-        <label for="fullName">Nombre completo
-          <input type="text" id="" name="fullName" required>
-        </label>
-        <label for="email">Correo Electrónico
-          <input type="email" id="email" name="email" required>
-        </label>
-        <label for="phone">Teléfono
-          <input type="tel" id="phone" name="phone" required
-            pattern="^(?:(?:00)?549?)?0?(?:11|[2368]\d)(?:(?=\d{0,2}15)\d{2})??\d{8}$">
-        </label>
-        <input type="submit" value="aceptar">
-        <input type="reset" value="limpiar">
-        <input type="button" value="cancelar" id="close-modal">
-      </form>
-    </dialog>
-    <table id="tabla">
-        <thead>
-            <tr>
-                <th>Usuario</th>
-                <th>Correo Electrónico</th>
-                <th>Telefono</th>
-                <th>Edit</th>
-                <th>Delete</th>
-            </tr>
-        </thead>
-        <tbody></tbody>
-    </table>
+  <header>
+    <h1>API REST</h1>
+    <p>Práctica de consumo de recursos a través de endpoints. Métodos GET, POST, PUT y DELETE.</p>
+    <p>Utilizamos el backend de prueba de <a href="https://mockapi.io" target="_blank">MockAPI</a></p>
+  </header>
+  <button id="open-modal-add">Añadir Usuario</button>
+  <dialog id="modal">
+    <form action="" method="dialog" id="formAdd">
+      <label for="name">Nombre completo
+        <input type="text" id="name" name="name" required>
+      </label>
+      <label for="email">Correo Electrónico
+        <input type="email" id="email" name="email" required>
+      </label>
+      <label for="phone">Teléfono
+        <input type="tel" id="phone" name="phone" required
+        pattern="^(?:(?:00)?549?)?0?(?:11|[2368]\d)(?:(?=\d{0,2}15)\d{2})??\d{8}$">
+      </label>
+      <input type="submit" value="aceptar">
+      <input type="reset" value="limpiar">
+      <input type="button" value="cancelar" id="close-modal">
+    </form>
+  </dialog>
+  <button id="open-modal-edit">Editar Usuario</button>
+  <dialog id="modal-edit">
+    <form action="" method="dialog" id="form">
+      <label for="name">Busca el nombre de la persona que queres editar
+        <input type="text" id="name" name="name" required>
+      </label>
+      <input type="submit" value="aceptar">
+      <input type="reset" value="limpiar">
+      <input type="button" value="cancelar" id="close-modal-edit">
+    </form>
+  </dialog>
+  <button id="open-modal">Eliminar Usuario</button>
+  
+  <table id="tabla">
+    <thead>
+      <tr>
+        <th>Usuario</th>
+        <th>Correo Electrónico</th>
+        <th>Telefono</th>
+        <th></th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+    </tbody>
+  </table>
 </body>
 
 </html>

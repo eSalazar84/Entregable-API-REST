@@ -6,17 +6,26 @@ Realizar el frontend de las operaciones CRUD que fueron provistas en clase
 */
 
 
-//Toma los datos cargados en el form 
-
-const form = document.getElementById("form");
-form.addEventListener("submit", handleSubmit);
-function handleSubmit() {
-    const user = new FormData(form);
-    console.log(user.get("nombre"));
+export class Users {
+    constructor(name, email, phone) {
+        this.name = name;
+        this.email = email;
+        this.phone = phone;
+    }
 }
 
+const formAdd = document.getElementById("formAdd");
+const name = document.getElementById("name");
+const email = document.getElementById("email");
+const phone = document.getElementById("phone");
+
+formAdd.addEventListener("submit", handleSubmit);
+function handleSubmit() {
+    const user = new Users(name.value, email.value, phone.value);
+    addOne(user);
+}
 //Abre y cierra el modal para agregar un nuevo medidor
-const openModal = document.getElementById("open-modal");
+const openModal = document.getElementById("open-modal-add");
 const modal = document.getElementById("modal");
 const closeModal = document.getElementById("close-modal");
 closeModal.addEventListener("click", () => {
@@ -27,6 +36,7 @@ openModal.addEventListener("click", () => {
 });
 
 const BASE_URL = "https://647e1bf1af984710854af280.mockapi.io/users";
+const tabla = document.getElementById("tabla");
 //get all resources
 function getAll() {
     fetch(BASE_URL)
@@ -34,18 +44,19 @@ function getAll() {
         .then(data => {
             console.log(data);
             //Muestra el listado de todos los medidores
-            const tabla = document.getElementById("tabla");
-            data.forEach(item => {
+            data.forEach(item => {                
                 const row = document.createElement("tr");
                 const userCell = document.createElement("td");
                 const emailCell = document.createElement("td");
                 const phoneCell = document.createElement("td");
                 const editCell = document.createElement("td");
                 const deleteCell = document.createElement("td");
-                const btnEdit = document.createElement("a");
-                btnEdit.textContent = "Editar Usuario";
-                const btnDelete = document.createElement("a");
-                btnDelete.textContent = "Eliminar Usuario"
+                const btnEdit = document.createElement("button");
+                btnEdit.type = "submit"
+                btnEdit.id = "open-modal-edit";
+                btnEdit.textContent = "Editar";
+                const btnDelete = document.createElement("button");
+                btnDelete.textContent = "Eliminar"
                 userCell.textContent = item.name;
                 emailCell.textContent = item.email;
                 phoneCell.textContent = item.phone;
@@ -53,13 +64,17 @@ function getAll() {
                 deleteCell.appendChild(btnDelete);
                 row.appendChild(userCell);
                 row.appendChild(emailCell);
+                row.appendChild(phoneCell);
                 row.appendChild(editCell);
                 row.appendChild(deleteCell);
                 tabla.appendChild(row);
+                document.body.appendChild(tabla);
             });
         })
         .catch(err => console.error(err));
 }
+
+
 //get resource by id
 function getOne(id) {
     fetch(BASE_URL + `/${id}`)
@@ -67,31 +82,59 @@ function getOne(id) {
         .then(data => console.log(data))
         .catch(err => console.error(err));
 }
+
 //delete one
-function deleteOne(id) {
+function deleteOne(user) {
     fetch(BASE_URL + `/${id}`, {
         method: "DELETE",
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(user)
     })
         .then(res => res.json())
-        .then(data => console.log(data))
+        .then(user => {
+            console.log(user);
+
+
+        })
         .catch(err => console.error(err));
 }
-//add a new resource
-const newUser = {
-    name: "Jorge 'el profe' Sardón",
-    email: "giorgioDJ@dero.com",
-    phone: "(2314) 232323223",
-};
 
 function addOne(user) {
+
+    //Toma los datos cargados en el formaAdd 
     fetch(BASE_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(user),
     })
         .then(res => res.json())
-        .then(data => {
-            console.log(data);
+        .then(user => {
+            console.log(user);
+            const tabla = document.getElementById("tabla");
+            const row = document.createElement("tr");
+            const userCell = document.createElement("td");
+            const emailCell = document.createElement("td");
+            const phoneCell = document.createElement("td");
+            const editCell = document.createElement("td");
+            const deleteCell = document.createElement("td");
+            const btnEdit = document.createElement("button");
+            btnEdit.textContent = "Editar";
+            const btnDelete = document.createElement("button");
+            btnDelete.textContent = "Eliminar"
+            userCell.textContent = user.name;
+            emailCell.textContent = user.email;
+            phoneCell.textContent = user.phone;
+            editCell.appendChild(btnEdit);
+            deleteCell.appendChild(btnDelete);
+            row.appendChild(userCell);
+            row.appendChild(emailCell);
+            row.appendChild(phoneCell);
+            row.appendChild(editCell);
+            row.appendChild(deleteCell);
+            tabla.appendChild(row);
+            document.body.appendChild(tabla);
         })
         .catch(err => console.error(err));
 }
@@ -101,15 +144,43 @@ const updatedUser = {
     email: "giorgioDJ@dero.com",
     phone: "(2314) 232323223",
 };
+
+
+const formEdit = document.getElementById("open-modal-edit");
+const openModalEdit = document.getElementById("open-modal-edit");
+const modalEdit = document.getElementById("modal-edit");
+const closeModalEdit = document.getElementById("close-modal-edit");
+openModalEdit.addEventListener("click", () => {
+    modalEdit.showModal();
+});
+closeModalEdit.addEventListener("click", () => {
+    modalEdit.close();
+});
+
+formEdit.addEventListener("click", ()=>{
+    updateOne();
+})
+
+
 function updateOne(id, user) {
+    BASE_URL.find(id);
     fetch(BASE_URL + `/${id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(user),
     })
         .then(res => res.json())
-        .then(data => console.log(data))
+        .then(data => {
+            console.log(data);
+            const user = data.find(id)
+            console.log(user);
+
+
+
+
+
+        })
         .catch(err => console.error(err));
 }
 
-getAll()
+getAll();
