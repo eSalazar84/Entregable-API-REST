@@ -22,10 +22,17 @@ function generateRows(item) {
     const editCell = document.createElement("td");
     const deleteCell = document.createElement("td");
     const btnEdit = document.createElement("button");
-    btnEdit.onclick = updateOne(`${item.id}`);
     btnEdit.textContent = "Editar";
+    btnEdit.addEventListener("click", () => {
+        console.log("hola?");
+        updateOne(item.id, item);
+    })
     const btnDelete = document.createElement("button");
     btnDelete.textContent = "Eliminar"
+    btnDelete.addEventListener("click", () => {
+        console.log("entra aca");
+        deleteOne(item.id);
+    })
     userCell.textContent = item.name;
     emailCell.textContent = item.email;
     phoneCell.textContent = item.phone;
@@ -37,19 +44,19 @@ function generateRows(item) {
     row.appendChild(editCell);
     row.appendChild(deleteCell);
     tabla.appendChild(row);
-    document.body.appendChild(tabla);
 }
 
 const formAdd = document.getElementById("formAdd");
+const title = document.getElementById("title")
 const name = document.getElementById("name");
 const email = document.getElementById("email");
 const phone = document.getElementById("phone");
 
-formAdd.addEventListener("submit", handleSubmit);
-function handleSubmit() {
+formAdd.addEventListener("submit", () => {
     const user = new Users(name.value, email.value, phone.value);
     addOne(user);
-}
+});
+
 //Abre y cierra el modal
 const openModal = document.getElementById("open-modal-add");
 const modal = document.getElementById("modal");
@@ -69,7 +76,6 @@ function getAll() {
         .then(res => res.json())
         .then(data => {
             console.log(data);
-            //Muestra el listado de todos los medidores
             data.forEach(item => {
                 generateRows(item);
             });
@@ -87,17 +93,14 @@ function getOne(id) {
 }
 
 //delete one
-function deleteOne(user) {
+function deleteOne(id) {
     fetch(BASE_URL + `/${id}`, {
         method: "DELETE",
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(user)
     })
         .then(res => res.json())
-        .then(user => {
-            console.log(user);
+        .then(data => {
+            console.log(data);
+            location.reload()
         })
         .catch(err => console.error(err));
 }
@@ -109,11 +112,11 @@ function addOne(user) {
         body: JSON.stringify(user),
     })
         .then(res => res.json())
-        .then(user => {
-            generateRows(user);
-        })
+        .then(user => generateRows(user))
         .catch(err => console.error(err));
 }
+
+
 
 function updateOne(id, user) {
     fetch(BASE_URL + `/${id}`, {
@@ -124,11 +127,19 @@ function updateOne(id, user) {
         .then(res => res.json())
         .then(data => {
             console.log(data);
-
-
+            modal.showModal();
+            title.innerHTML = "Editar Usuario";
+            name.value = data.name;
+            email.value = data.email;
+            phone.value = data.phone;
+            formAdd.addEventListener("click",()=>{
+                console.log("entra aca?");
+                
+            })
         })
         .catch(err => console.error(err));
 }
+
 
 getAll();
 

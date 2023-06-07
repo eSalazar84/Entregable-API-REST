@@ -26,9 +26,9 @@
     <p>Utilizamos el backend de prueba de <a href="https://mockapi.io" target="_blank">MockAPI</a></p>
   </header>
   <button id="open-modal-add">Añadir Usuario</button>
-  <div><label for="">Busca de usuarios registrados<input type="text" name="search" id="search"></label><button>Editar Usuario</button><button>Eliminar Usuario</button></div>
   <dialog id="modal">
-    <form action="" method="dialog" id="formAdd">
+    <form action="" method="dialog" id="formAdd" class="formAdd">
+      <h3 id="title">Añadir Nuevo Usuario</h3>
       <label for="name">Nombre completo
         <input type="text" id="name" name="name" required>
       </label>
@@ -44,6 +44,7 @@
       <input type="button" value="cancelar" id="close-modal">
     </form>
   </dialog>
+
   <table id="tabla">
     <thead>
       <tr>
