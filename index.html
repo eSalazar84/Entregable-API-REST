@@ -26,6 +26,7 @@
     <p>Utilizamos el backend de prueba de <a href="https://mockapi.io" target="_blank">MockAPI</a></p>
   </header>
   <button id="open-modal-add">Añadir Usuario</button>
+  <div><label for="">Busca de usuarios registrados<input type="text" name="search" id="search"></label><button>Editar Usuario</button><button>Eliminar Usuario</button></div>
   <dialog id="modal">
     <form action="" method="dialog" id="formAdd">
       <label for="name">Nombre completo
@@ -36,26 +37,13 @@
       </label>
       <label for="phone">Teléfono
         <input type="tel" id="phone" name="phone" required
-        pattern="^(?:(?:00)?549?)?0?(?:11|[2368]\d)(?:(?=\d{0,2}15)\d{2})??\d{8}$">
+          pattern="^(?:(?:00)?549?)?0?(?:11|[2368]\d)(?:(?=\d{0,2}15)\d{2})??\d{8}$">
       </label>
       <input type="submit" value="aceptar">
       <input type="reset" value="limpiar">
       <input type="button" value="cancelar" id="close-modal">
     </form>
   </dialog>
-  <button id="open-modal-edit">Editar Usuario</button>
-  <dialog id="modal-edit">
-    <form action="" method="dialog" id="form">
-      <label for="name">Busca el nombre de la persona que queres editar
-        <input type="text" id="name" name="name" required>
-      </label>
-      <input type="submit" value="aceptar">
-      <input type="reset" value="limpiar">
-      <input type="button" value="cancelar" id="close-modal-edit">
-    </form>
-  </dialog>
-  <button id="open-modal">Eliminar Usuario</button>
-  
   <table id="tabla">
     <thead>
       <tr>
