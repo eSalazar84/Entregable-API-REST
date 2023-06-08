@@ -39,9 +39,28 @@
         <input type="tel" id="phone" name="phone" required
           pattern="^(?:(?:00)?549?)?0?(?:11|[2368]\d)(?:(?=\d{0,2}15)\d{2})??\d{8}$">
       </label>
-      <input type="submit" value="aceptar">
+      <input type="submit" value="Agregar">
       <input type="reset" value="limpiar">
       <input type="button" value="cancelar" id="close-modal">
+    </form>
+  </dialog>
+
+  <dialog id="modal-edit">
+    <form action="" method="dialog" id="formAdd-edit" class="formAdd">
+      <!-- <h3 id="title">Añadir Nuevo Usuario</h3> -->
+      <label for="name-edit">Nombre completo
+        <input type="text" id="name-edit" name="name-edit" required>
+      </label>
+      <label for="email-edit">Correo Electrónico
+        <input type="email" id="email-edit" name="email-edit" required>
+      </label>
+      <label for="phone-edit">Teléfono
+        <input type="tel" id="phone-edit" name="phone-edit" required
+          pattern="^(?:(?:00)?549?)?0?(?:11|[2368]\d)(?:(?=\d{0,2}15)\d{2})??\d{8}$">
+      </label>
+      <input type="submit" value="Editar">
+      <input type="reset" value="limpiar">
+      <input type="button" value="cancelar" id="close-modal-edit">
     </form>
   </dialog>
 

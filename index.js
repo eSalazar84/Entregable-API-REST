@@ -24,8 +24,16 @@ function generateRows(item) {
     const btnEdit = document.createElement("button");
     btnEdit.textContent = "Editar";
     btnEdit.addEventListener("click", () => {
+        modalEdit.showModal();
         console.log("hola?");
-        updateOne(item.id, item);
+        nameEdit.value = item.name;
+        emailEdit.value= item.email;
+        phoneEdit.value=item.phone;
+        formAddEdit.addEventListener("submit",()=>{
+            const updateUser = new Users(nameEdit.value,emailEdit.value,phoneEdit.value)
+            updateOne(item.id,updateUser);
+            
+        })
     })
     const btnDelete = document.createElement("button");
     btnDelete.textContent = "Eliminar"
@@ -116,7 +124,17 @@ function addOne(user) {
         .catch(err => console.error(err));
 }
 
+const modalEdit = document.getElementById("modal-edit");
+const nameEdit = document.getElementById("name-edit");
+const emailEdit = document.getElementById("email-edit");
+const phoneEdit = document.getElementById("phone-edit");
+const closeModalEdit = document.getElementById("close-modal-edit");
+const formAddEdit = document.getElementById("formAdd-edit")
 
+
+closeModalEdit.addEventListener("click", () => {
+    modalEdit.close();
+});
 
 function updateOne(id, user) {
     fetch(BASE_URL + `/${id}`, {
@@ -124,21 +142,14 @@ function updateOne(id, user) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(user),
     })
-        .then(res => res.json())
-        .then(data => {
-            console.log(data);
-            modal.showModal();
-            title.innerHTML = "Editar Usuario";
-            name.value = data.name;
-            email.value = data.email;
-            phone.value = data.phone;
-            formAdd.addEventListener("click",()=>{
-                console.log("entra aca?");
-                
-            })
-        })
-        .catch(err => console.error(err));
+    .then(res => res.json())
+    .then(data => { 
+        console.log(data);
+        location.reload();
+    })
+    .catch(err => console.error(err));
 }
+
 
 
 getAll();
