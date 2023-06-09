@@ -25,9 +25,13 @@
     <p>Práctica de consumo de recursos a través de endpoints. Métodos GET, POST, PUT y DELETE.</p>
     <p>Utilizamos el backend de prueba de <a href="https://mockapi.io" target="_blank">MockAPI</a></p>
   </header>
-  <button id="open-modal-add">Añadir Usuario</button>
-  <button id="btn-modal-search">Buscar Usuario</button>
-  <dialog id="modal">
+
+  <nav class="button-options">
+    <button id="open-modal-add">Añadir Usuario</button>
+    <button id="btn-modal-search">Buscar Usuario</button>
+  </nav>
+
+    <dialog id="modal">
     <form action="" method="dialog" id="formAdd" class="formAdd">
       <h3 id="title">Añadir Nuevo Usuario</h3>
       <label for="name">Nombre completo
@@ -46,21 +50,15 @@
     </form>
   </dialog>
 
-
   <dialog id="modal-search">
     <form action="" method="dialog" id="formSearch">
-      <label for="search">Busqueda por Nombre de Usuario
+      <label for="search">Busqueda de Usuario 
         <input type="text" name="search" id="search">
         <input type="submit" value="Buscar">
         <input type="button" value="Cancelar" id="close-search">
       </label>
     </form>
   </dialog>
-
-
-
-
-
 
   <table id="tabla">
     <thead>
