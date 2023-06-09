@@ -26,6 +26,7 @@
     <p>Utilizamos el backend de prueba de <a href="https://mockapi.io" target="_blank">MockAPI</a></p>
   </header>
   <button id="open-modal-add">Añadir Usuario</button>
+  <button id="btn-modal-search">Buscar Usuario</button>
   <dialog id="modal">
     <form action="" method="dialog" id="formAdd" class="formAdd">
       <h3 id="title">Añadir Nuevo Usuario</h3>
@@ -39,30 +40,27 @@
         <input type="tel" id="phone" name="phone" required
           pattern="^(?:(?:00)?549?)?0?(?:11|[2368]\d)(?:(?=\d{0,2}15)\d{2})??\d{8}$">
       </label>
-      <input type="submit" value="Agregar">
+      <input type="submit" value="Agregar" id="btn-agregar">
       <input type="reset" value="limpiar">
       <input type="button" value="cancelar" id="close-modal">
     </form>
   </dialog>
 
-  <dialog id="modal-edit">
-    <form action="" method="dialog" id="formAdd-edit" class="formAdd">
-      <!-- <h3 id="title">Añadir Nuevo Usuario</h3> -->
-      <label for="name-edit">Nombre completo
-        <input type="text" id="name-edit" name="name-edit" required>
+
+  <dialog id="modal-search">
+    <form action="" method="dialog" id="formSearch">
+      <label for="search">Busqueda por Nombre de Usuario
+        <input type="text" name="search" id="search">
+        <input type="submit" value="Buscar">
+        <input type="button" value="Cancelar" id="close-search">
       </label>
-      <label for="email-edit">Correo Electrónico
-        <input type="email" id="email-edit" name="email-edit" required>
-      </label>
-      <label for="phone-edit">Teléfono
-        <input type="tel" id="phone-edit" name="phone-edit" required
-          pattern="^(?:(?:00)?549?)?0?(?:11|[2368]\d)(?:(?=\d{0,2}15)\d{2})??\d{8}$">
-      </label>
-      <input type="submit" value="Editar">
-      <input type="reset" value="limpiar">
-      <input type="button" value="cancelar" id="close-modal-edit">
     </form>
   </dialog>
+
+
+
+
+
 
   <table id="tabla">
     <thead>

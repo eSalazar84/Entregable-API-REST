@@ -1,10 +1,32 @@
 /* 
-Trabajo práctico obligatorio. Entrega viernes 9. 
-Crear un backend de prueba en MockAPI. 
-Realizar el frontend de las operaciones CRUD que fueron provistas en clase 
-(pueden usarlas, modificarlas o hacer otras distintas).
+Trabajo práctico obligatorio. Entrega viernes 9. Crear un backend de prueba en MockAPI. Realizar el frontend de las operaciones CRUD que fueron provistas en clase (pueden usarlas, modificarlas o hacer otras distintas). 
 */
 
+const BASE_URL = "https://647e1bf1af984710854af280.mockapi.io/users";
+
+//traigo los ID del form en los que voy a trabajar
+const tabla = document.getElementById("tabla");
+const formAdd = document.getElementById("formAdd");
+const title = document.getElementById("title")
+const name = document.getElementById("name");
+const email = document.getElementById("email");
+const phone = document.getElementById("phone");
+const btnSend = document.getElementById("btn-agregar");
+
+//traigo los id para abrir y cerrar el modal para agregar o editar usuarios
+const openModal = document.getElementById("open-modal-add");
+const modal = document.getElementById("modal");
+const closeModal = document.getElementById("close-modal");
+
+//traigo los id para abrir y cerrar el modal de busqueda
+const btnModalSearch = document.getElementById("btn-modal-search");
+const modalSearch = document.getElementById("modal-search");
+const searchUser = document.getElementById("search");
+const btnSearch = document.getElementById("formSearch");
+const btnCancel = document.getElementById("close-search");
+
+
+// creo la clase Users para agregar un nuevo usuario o actualizarlo
 export class Users {
     constructor(name, email, phone) {
         this.name = name;
@@ -24,21 +46,20 @@ function generateRows(item) {
     const btnEdit = document.createElement("button");
     btnEdit.textContent = "Editar";
     btnEdit.addEventListener("click", () => {
-        modalEdit.showModal();
-        console.log("hola?");
-        nameEdit.value = item.name;
-        emailEdit.value= item.email;
-        phoneEdit.value=item.phone;
-        formAddEdit.addEventListener("submit",()=>{
-            const updateUser = new Users(nameEdit.value,emailEdit.value,phoneEdit.value)
-            updateOne(item.id,updateUser);
-            
+        modal.showModal();
+        title.textContent = "Editar Usuario"
+        btnSend.value = "Editar"
+        name.value = item.name;
+        email.value = item.email;
+        phone.value = item.phone;
+        formAdd.addEventListener("submit", () => {
+            const updateUser = new Users(name.value, email.value, phone.value)
+            updateOne(item.id, updateUser);
         })
     })
     const btnDelete = document.createElement("button");
     btnDelete.textContent = "Eliminar"
     btnDelete.addEventListener("click", () => {
-        console.log("entra aca");
         deleteOne(item.id);
     })
     userCell.textContent = item.name;
@@ -54,30 +75,25 @@ function generateRows(item) {
     tabla.appendChild(row);
 }
 
-const formAdd = document.getElementById("formAdd");
-const title = document.getElementById("title")
-const name = document.getElementById("name");
-const email = document.getElementById("email");
-const phone = document.getElementById("phone");
 
-formAdd.addEventListener("submit", () => {
-    const user = new Users(name.value, email.value, phone.value);
-    addOne(user);
-});
-
-//Abre y cierra el modal
-const openModal = document.getElementById("open-modal-add");
-const modal = document.getElementById("modal");
-const closeModal = document.getElementById("close-modal");
+// creo eventos para abrir y cerrar el modal
 closeModal.addEventListener("click", () => {
     modal.close();
 });
+
 openModal.addEventListener("click", () => {
     modal.showModal();
+    title.textContent = "Agregar Usuario";
+    btnSend.value = "Agregar"
+    name.value = "";
+    email.value = "";
+    phone.value = "";
+    formAdd.addEventListener("submit", () => {
+        const user = new Users(name.value, email.value, phone.value);
+        addOne(user);
+    });
 });
 
-const BASE_URL = "https://647e1bf1af984710854af280.mockapi.io/users";
-const tabla = document.getElementById("tabla");
 //get all resources
 function getAll() {
     fetch(BASE_URL)
@@ -87,16 +103,8 @@ function getAll() {
             data.forEach(item => {
                 generateRows(item);
             });
+
         })
-        .catch(err => console.error(err));
-}
-
-
-//get resource by id
-function getOne(id) {
-    fetch(BASE_URL + `/${id}`)
-        .then(res => res.json())
-        .then(data => console.log(data))
         .catch(err => console.error(err));
 }
 
@@ -124,32 +132,49 @@ function addOne(user) {
         .catch(err => console.error(err));
 }
 
-const modalEdit = document.getElementById("modal-edit");
-const nameEdit = document.getElementById("name-edit");
-const emailEdit = document.getElementById("email-edit");
-const phoneEdit = document.getElementById("phone-edit");
-const closeModalEdit = document.getElementById("close-modal-edit");
-const formAddEdit = document.getElementById("formAdd-edit")
-
-
-closeModalEdit.addEventListener("click", () => {
-    modalEdit.close();
-});
-
 function updateOne(id, user) {
     fetch(BASE_URL + `/${id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(user),
     })
-    .then(res => res.json())
-    .then(data => { 
-        console.log(data);
-        location.reload();
-    })
-    .catch(err => console.error(err));
+        .then(res => res.json())
+        .then(data => {
+            console.log(data);
+            location.reload();
+        })
+        .catch(err => console.error(err));
 }
 
+function getOne(keyword) {
+    fetch(BASE_URL + `?search=${keyword}`)
+        .then(res => res.json())
+        .then(data => {
+            tabla.innerHTML = "";
+            data.forEach(item => {
+                generateRows(item);
+            });
+        })
+        .catch(err => console.error(err));
+}
+
+btnModalSearch.addEventListener("click", () => {
+    modalSearch.showModal();
+    btnSearch.addEventListener("click", () => {
+        const keyword = searchUser.value;
+        if (keyword.trim() !== "") {
+            getOne(keyword);
+            btnModalSearch.textContent="Cancelar Busqueda";
+            btnModalSearch.addEventListener("click",()=>{
+                location.reload();
+            })
+        }
+    });
+})
+
+btnCancel.addEventListener("click", () => {
+    location.reload();
+});
 
 
 getAll();
